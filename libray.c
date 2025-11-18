@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_BOOKS 20
+#define MAX_BOOKS 2
 
 typedef struct Book {
     char title[50];     //Título
@@ -11,6 +11,31 @@ typedef struct Book {
     int  id;            //Código
     int  year;          //Ano de publicação
 } book;
+
+
+void salvarLivroNoArquivo(const book *books, int book_count) 
+{
+    FILE *file = fopen("livros.txt", "a");
+
+    if (file == NULL) 
+    {
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
+    }
+
+    int i = book_count - 1; 
+
+    fprintf(file, "Título: %s\n", books[i].title);
+    fprintf(file, "Autor: %s\n", books[i].author);
+    fprintf(file, "Editora: %s\n", books[i].publisher);
+    fprintf(file, "Área: %s\n", books[i].area);
+    fprintf(file, "ID: %d\n", books[i].id);
+    fprintf(file, "Ano de publicação: %d\n", books[i].year);
+    fprintf(file, "--------------------------\n");
+
+    fclose(file);
+}
+
 
 void cadastrarLivro(book *books, int *book_count) //ponteiro em books_count para alterar o valor do main
 {
@@ -41,7 +66,10 @@ void cadastrarLivro(book *books, int *book_count) //ponteiro em books_count para
     {
         printf("Capacidade máxima de livros atingida.\n");
     }
+
+    salvarLivroNoArquivo(books, *book_count);
 }
+
 
 void imprimirLivros(const book *books, int book_count) 
 {
@@ -64,6 +92,27 @@ void imprimirLivros(const book *books, int book_count)
         printf("--------------------------\n");
     }
 }
+
+void lerEImprimirArquivo()
+{
+    FILE *file = fopen("livros.txt", "r");
+
+    if (file == NULL)
+    {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    char linha[300];
+
+    while (fgets(linha, sizeof(linha), file) != NULL)
+    {
+        printf("%s", linha); 
+    }
+
+    fclose(file);
+}
+
 
 void pesquisarLivroPorCodigo(const book *books, int book_count, int id) 
 {
@@ -127,7 +176,11 @@ int main()
                 cadastrarLivro(books, &book_count);
                 break;
             case 2:
+                printf("\n=== LIVROS NA MEMÓRIA ===\n");
                 imprimirLivros(books, book_count);
+
+                printf("\n=== LIVROS NO ARQUIVO ===\n");
+                lerEImprimirArquivo();
                 break;
             case 3:
                 pesquisarLivroPorCodigo(books, book_count, 0);
