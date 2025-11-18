@@ -86,6 +86,24 @@ void pesquisarLivroPorCodigo(const book *books, int book_count, int id)
     }
 }
 
+void ordenarLivros(book *books, int book_count) 
+{
+    for (int i = 0; i < book_count - 1; i++) 
+    {
+        for (int j = 0; j < book_count - i - 1; j++) 
+        {
+            if (books[j].year > books[j + 1].year) 
+            {
+                book temp = books[j];
+                books[j] = books[j + 1];
+                books[j + 1] = temp;
+            }
+        }
+    }
+    printf("Livros ordenados por ano de publicação com sucesso!\n");
+}
+
+
 int main() 
 {
     book books[MAX_BOOKS];
@@ -116,7 +134,7 @@ int main()
                 pesquisarLivroPorCodigo(books, book_count, 0);
                 break;
             case 4:
-                
+                ordenarLivros(books, book_count);
                 break;
             case 5:
                 printf("Saindo...\n");
