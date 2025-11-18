@@ -12,8 +12,6 @@ typedef struct Book {
     int year;
 } book;
 
-int book_count = 0;
-
 void cadastrarLivro(book *books, int *book_count) 
 {
     if (*book_count < MAX_BOOKS) 
@@ -43,8 +41,51 @@ void cadastrarLivro(book *books, int *book_count)
     {
         printf("Capacidade máxima de livros atingida.\n");
     }
-
 }
+
+void imprimirLivros(const book *books, int book_count) 
+{
+    if (book_count == 0) 
+    {
+        printf("Nenhum livro cadastrado.\n");
+        return;
+    }
+
+    for (int i = 0; i < book_count; i++)
+    {
+        printf("--------------------------\n");
+        printf("\nLivro %d:\n", i + 1);
+        printf("Título: %s\n", books[i].title);
+        printf("Autor: %s\n", books[i].author);
+        printf("Editora: %s\n", books[i].publisher);
+        printf("Área: %s\n", books[i].area);
+        printf("ID: %d\n", books[i].id);
+        printf("Ano de publicação: %d\n", books[i].year);
+        printf("--------------------------\n");
+    }
+}
+
+void pesquisarLivroPorCodigo(const book *books, int book_count, int id) 
+{
+    printf("Digite o ID do livro que deseja pesquisar: ");
+    scanf("%d", &id);
+    
+    for(int i = 0; i < book_count; i++)
+    {
+        if(books[i].id == id)
+        {
+            printf("Livro encontrado:\n");
+            printf("Título: %s\n", books[i].title);
+            printf("Autor: %s\n", books[i].author);
+            printf("Editora: %s\n", books[i].publisher);
+            printf("Área: %s\n", books[i].area);
+            printf("ID: %d\n", books[i].id);
+            printf("Ano de publicação: %d\n", books[i].year);
+            return;
+        }
+    }
+}
+
 int main() 
 {
     book books[MAX_BOOKS];
@@ -69,10 +110,10 @@ int main()
                 cadastrarLivro(books, &book_count);
                 break;
             case 2:
-                
+                imprimirLivros(books, book_count);
                 break;
             case 3:
-                
+                pesquisarLivroPorCodigo(books, book_count, 0);
                 break;
             case 4:
                 
