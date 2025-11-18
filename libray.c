@@ -4,15 +4,15 @@
 #define MAX_BOOKS 20
 
 typedef struct Book {
-    char title[50];
-    char author[50];
-    char publisher[50];
-    char area[30];
-    int id;
-    int year;
+    char title[50];     //Título
+    char author[50];    //Autor
+    char publisher[50]; //Editora
+    char area[30];      //Área
+    int  id;            //Código
+    int  year;          //Ano de publicação
 } book;
 
-void cadastrarLivro(book *books, int *book_count) 
+void cadastrarLivro(book *books, int *book_count) //ponteiro em books_count para alterar o valor do main
 {
     if (*book_count < MAX_BOOKS) 
     {
@@ -90,7 +90,7 @@ void ordenarLivros(book *books, int book_count)
 {
     for (int i = 0; i < book_count - 1; i++) 
     {
-        for (int j = 0; j < book_count - i - 1; j++) 
+        for (int j = 0; j < book_count - i - 1; j++) //Percorre até o penúltimo elemento não ordenado
         {
             if (books[j].year > books[j + 1].year) 
             {
@@ -102,7 +102,6 @@ void ordenarLivros(book *books, int book_count)
     }
     printf("Livros ordenados por ano de publicação com sucesso!\n");
 }
-
 
 int main() 
 {
